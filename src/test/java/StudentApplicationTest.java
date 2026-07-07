@@ -1,0 +1,1 @@
+public class StudentApplicationTest { public void testApp(){} }
