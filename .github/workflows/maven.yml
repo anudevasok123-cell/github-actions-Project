@@ -36,3 +36,29 @@ jobs:
 
       - name: Run Tests
         run: mvn test
+    name: Docker Image CI
+
+
+  docker:
+    needs: test
+    runs-on: ubuntu-latest
+
+    env:
+      IMAGE_NAME: ${{ vars.IMAGE_NAME }}
+
+    steps:
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Display Variable
+        run: echo "Image Name is $IMAGE_NAME"
+
+      - name: Display Secret
+        run: echo "Docker Username is ${{ secrets.DOCKER_USERNAME }}"
+
+      - name: Build Docker Image
+        run: |
+          docker build . \
+          --file Dockerfile \
+          --tag $IMAGE_NAME:latest
